@@ -1,0 +1,48 @@
+def remove_common_letters(name1, name2):
+    # Convert both names to lowercase and remove spaces
+    name1 = name1.lower().replace(" ", "")
+    name2 = name2.lower().replace(" ", "")
+    
+    # Convert the names to lists to modify them
+    list1 = list(name1)
+    list2 = list(name2)
+    
+    # Remove common letters from both names
+    for letter in list1[:]:
+        if letter in list2:
+            list1.remove(letter)
+            list2.remove(letter)
+    
+    # Return the total number of remaining letters
+    return len(list1) + len(list2)
+
+def flames_relationship(count):
+    flames = ['Friends', 'Lovers', 'Affectionate', 'Marriage', 'Enemies', 'Siblings']
+    
+    # Use the FLAMES logic to find the relationship
+    while len(flames) > 1:
+        split_index = (count % len(flames)) - 1
+        if split_index >= 0:
+            right = flames[split_index+1:]
+            left = flames[:split_index]
+            flames = right + left
+        else:
+            flames = flames[:len(flames)-1]
+    
+    # Return the final relationship
+    return flames[0]
+
+def flames_game(player1, player2):
+    # Remove common letters and get the count of remaining letters
+    count = remove_common_letters(player1, player2)
+    
+    # Get the relationship status using the FLAMES logic
+    return flames_relationship(count)
+
+# Input names
+player1 = input("Enter the name of player 1: ")
+player2 = input("Enter the name of player 2: ")
+
+# Calculate and display the relationship status
+relationship_status = flames_game(player1, player2)
+print(f"Relationship status: {relationship_status}")
